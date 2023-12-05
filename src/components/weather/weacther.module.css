@@ -1,0 +1,13 @@
+.slider{
+  display:  flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: yellowgreen;
+}
+.container{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
