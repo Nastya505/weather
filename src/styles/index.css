@@ -12,13 +12,8 @@ code {
     monospace;
 }
 
-
-.light {
-  background-color: #ffffff;
-  color: #000000;
-}
-
-.dark {
-  background-color: #000000;
-  color: #ffffff;
+.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Carousel} from '@mantine/carousel';
+
+import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
+
 import styles from "./weacther.module.css";
+
+import { BsFillCloudSnowFill } from "react-icons/bs";
 
 
 
@@ -12,46 +16,59 @@ const checkReponse = (res) => {
 };
 
 
-function Weather(){
+function Weather() {
 
-      const [weather, setWeather] = useState({});
-      const getData = () => {
+  const [weather, setWeather] = useState({});
+  const getData = () => {
 
-        setWeather({...weather, isLoading: true});
+    setWeather({ ...weather, isLoading: true });
 
-        return fetch(`${API}`)
-        .then(checkReponse)
-        .then(response => setWeather( {...weather, data: response, isLoading: false, hasError: false} ))
-        .catch(e => setWeather({...weather, loading: false, hasError: true}));
-      }
+    return fetch(`${API}`)
+      .then(checkReponse)
+      .then(response => setWeather({ ...weather, data: response, isLoading: false, hasError: false }))
+      .catch(e => setWeather({ ...weather, loading: false, hasError: true }));
+  }
 
-      useEffect(() => {
-        getData();
-      }, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
-      return (
-        <>
-          {weather.data && weather.data.daily
-           ? (
-            <div className={styles.container}>
-               <Carousel initialSlide={1} slideSize="80%" height={400} styles={{container:{gap: '10px'}}} >
-                {weather.data.daily.time.map((date, index) => (
-                  <Carousel.Slide
-                  className={styles.slider}
+  return (
+    <>
+      {weather.data && weather.data.daily
+        ? (
+          <div className={styles.container}>
+            <Carousel classNames={styles.slider} initialSlide={1} slideSize="80%" height={500} styles={{ container: { gap: '10px', width: '100%' } }} >
+              {weather.data.daily.time.map((date, index) => (
+                <Carousel.Slide
+                
+                  className={styles.item}
                   key={index}>
-                    <p>Date: {date}</p>
-                    <p>Max Temperature: {weather.data.daily.temperature_2m_max[index]}</p>
-                    <p>Min Temperature: {weather.data.daily.temperature_2m_min[index]}</p>
-                  </Carousel.Slide>
-                ))}
-              </Carousel>
-            </div>
-          )
-          : (
-            <h1>Loading...</h1>
-          )}
-        </>
-      );
+                  <div className={styles.date}>{date}</div>
+
+                  <BsFillCloudSnowFill size={100} />
+
+                  <div className={styles.temps}>
+                    <div className={styles.temp}>
+                      <span>max</span>
+                      <p>{weather.data.daily.temperature_2m_max[index]}°C</p>
+                    </div>
+                    <div className={styles.temp}>
+                      <span>min</span> 
+                      <p>{weather.data.daily.temperature_2m_min[index]}°C</p>
+                      </div>
+                  </div>
+
+                </Carousel.Slide>
+              ))}
+            </Carousel>
+          </div>
+        )
+        : (
+          <h1 className='center' >Loading...</h1>
+        )}
+    </>
+  );
 }
 
 export default Weather;

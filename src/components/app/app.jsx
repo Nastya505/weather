@@ -1,30 +1,30 @@
-import Weather from "../weather/weather";
-import {
-  useComputedColorScheme,
-  useMantineColorScheme,
-} from '@mantine/core';
+import { ActionIcon, useMantineColorScheme, useComputedColorScheme } from '@mantine/core';
+import { IoMoon } from "react-icons/io5";
+import { FaSun } from "react-icons/fa";
 
-import { Button } from '@mantine/core';
-
-import Theme from "../thems/theme";
-
-function App(){
-  const { colorScheme, setColorScheme } = useMantineColorScheme();
+import Weather from '../weather/weather';
 
 
-  const toggleColorScheme = () => {
-    setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
-  };
+function App() {
+  const { setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
 
-      return (
-        <>
-         <Weather/>
+  return (
+    <>
+      <ActionIcon
+        onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
+        variant="default"
+        size="xl"
+        aria-label="Toggle color scheme"
+      >
+        {computedColorScheme === 'light' ? <FaSun size="1.1rem" /> : <IoMoon size="1.1rem" />}
+      </ActionIcon>
+      <div className='center'>
 
-
-          <Button onClick={toggleColorScheme}>Toggle color scheme</Button>
-
-        </>
-      );
+        <Weather/>
+      </div>
+    </>
+  );
 }
 
 export default App;
