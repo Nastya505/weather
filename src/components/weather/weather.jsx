@@ -8,8 +8,14 @@ import styles from "./weacther.module.css";
 import { BsFillCloudSnowFill } from "react-icons/bs";
 
 
+const date = new Date();
+date.setDate(date.getDate() - 1);
+const startDate = date.toISOString().split('T')[0];
 
-const API = "https://api.open-meteo.com/v1/forecast?latitude=55.0415&longitude=82.9346&current=temperature_2m&daily=temperature_2m_max,temperature_2m_min&timezone=auto&start_date=2023-12-04&end_date=2023-12-06"
+date.setDate(date.getDate() + 2);
+const endDate = date.toISOString().split('T')[0];
+
+const API = `https://api.open-meteo.com/v1/forecast?latitude=55.0415&longitude=82.9346&current=temperature_2m&daily=temperature_2m_max,temperature_2m_min&timezone=auto&start_date=${startDate}&end_date=${endDate}`
 
 const checkReponse = (res) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
